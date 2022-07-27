@@ -1,7 +1,11 @@
-import React from 'react';
+import { Thing } from 'react-chat-engine-advanced';
 
 function App() {
-  return <div>hey</div>;
+  return (
+    <div>
+      <Thing />
+    </div>
+  );
 }
 
 export default App;
