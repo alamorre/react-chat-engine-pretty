@@ -1,9 +1,9 @@
-import { Thing } from 'react-chat-engine-advanced';
+import { PrettyChatWindow } from 'react-chat-engine-advanced';
 
 function App() {
   return (
     <div>
-      <Thing />
+      <PrettyChatWindow />
     </div>
   );
 }
