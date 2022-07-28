@@ -29,17 +29,9 @@ const CustomChatCard = (props: CustomChatCardProps) => {
   return (
     <div>
       <style>{`
-        .ce-chat-card { border: 1px solid #3e404b !important; background-color: #3e404b !important; margin: 10px 12px !important; height: 68px !important; }
         .ce-chat-card:hover { border: 1px solid #1890ff !important; box-shadow: rgb(24 144 255 / 35%) 0px 2px 7px !important; }
         .ce-chat-card-loading { height: 10px !important; }
         .ce-chat-card-title-loading { top: 16px !important; }
-        .ce-active-chat-card { border: 1px solid #1890ff !important; background-color: #1890ff !important; box-shadow: rgb(24 144 255 / 35%) 0px 2px 7px !important; color: white !important; }
-        .ce-chat-card-title { color: white !important; }
-        .ce-chat-card-subtitle { font-size: 12px !important; bottom: 16px !important; width: calc(70% - 44px) !important; color: #c5c5c5 !important; }
-        .ce-chat-card-time-stamp { font-size: 12px !important; bottom: 16px !important; }
-        .ce-chat-card-unread { top: calc((68px - 12px) / 2) !important; }
-        .ce-avatar-status { border: 2px solid rgb(40,43,54) !important; width: 10px !important; height: 10px !important; }
-        .ce-chat-card-avatar { top: 12px !important; }
         `}</style>
 
       <ChatCard
@@ -53,6 +45,7 @@ const CustomChatCard = (props: CustomChatCardProps) => {
         avatarUrl={otherMember?.avatar}
         avatarUsername={username}
         avatarStyle={{
+          top: '12px',
           boxShadow: otherMember?.is_online
             ? 'rgb(24 144 255 / 35%) 0px 2px 7px'
             : 'rgb(245 34 45 / 35%) 0px 2px 7px',
@@ -62,6 +55,29 @@ const CustomChatCard = (props: CustomChatCardProps) => {
         }}
         isActive={props.isActive}
         onClick={() => props.chat && props.onChatCardClick(props.chat.id)}
+        style={{
+          border: '1px solid #3e404b',
+          backgroundColor: '#3e404b',
+          margin: '10px 12px',
+          height: '68px',
+        }}
+        titleStyle={{ color: 'white' }}
+        subtitleStyle={{
+          bottom: '16px',
+          width: 'calc(70% - 44px)',
+          color: '#c5c5c5',
+        }}
+        timeStampStyle={{
+          fontSize: '12px',
+          bottom: '16px',
+        }}
+        activeStyle={{
+          border: '1px solid #1890ff',
+          backgroundColor: '#1890ff',
+          boxShadow: 'rgb(24 144 255 / 35%) 0px 2px 7px',
+          color: 'white',
+        }}
+        notificationStyle={{ top: 'calc((68px - 12px) / 2)' }}
       />
     </div>
   );
