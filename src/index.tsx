@@ -6,6 +6,7 @@ import {
   MultiChatWindowProps,
   MultiChatSocket,
   ChatFeed,
+  ChatCardProps,
   ChatHeaderProps,
   MessageFormProps,
 } from 'react-chat-engine-advanced';
@@ -13,6 +14,7 @@ import {
 import { useIsMobile } from './functions/isMobile';
 
 import ChatHeader from './components/ChatHeader';
+import ChatCard from './components/ChatCard';
 import MessageForm from './components/MessageForm';
 
 interface PrettyChatWindowProps extends MultiChatWindowProps {
@@ -42,7 +44,21 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       <div style={styles.col1} />
 
       <div style={isMobile ? styles.col0 : styles.col8}>
-        <ChatList {...chatProps} />
+        <ChatList
+          {...chatProps}
+          renderChatCard={(props: ChatCardProps) => (
+            <ChatCard
+              {...props}
+              username={chatProps.username}
+              onChatCardClick={chatProps.onChatCardClick}
+              isActive={
+                props.chat !== undefined &&
+                chatProps.activeChatId === props.chat.id
+              }
+              chat={props.chat}
+            />
+          )}
+        />
       </div>
 
       <div style={isMobile ? styles.col22 : styles.col14}>
@@ -65,6 +81,10 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       <div style={styles.col1} />
 
       <style>{`
+      .ce-chat-list { background-color: rgb(40,43,54) !important; }
+      .ce-chat-form { background-color: rgb(40,43,54) !important; padding-bottom: 14px !important;  }
+      .ce-chat-form-title { color: white !important; }
+
       .ce-chat-feed-column { border: none !important; }
       .ce-chat-feed { background-color: rgb(40,43,54) !important; }
       .ce-message-list { margin-top: 24px !important; margin-left: 12px !important; margin-right: 12px !important; padding: 0px 3.3vw !important; background: linear-gradient(0deg, rgba(62,64,75,1) 0%, rgba(62,64,75,1) 75%, rgba(40,43,54,1) 100%); border-radius: 8px 8px 0px 0px !important; height: calc((100% - 85px) - 72px - 24px - 12px) !important; }
