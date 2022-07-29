@@ -74,7 +74,8 @@ const styles = {
   messageInput: {
     marginTop: '6px',
     marginLeft: '3.3vw',
-    width: 'calc(100% - 3.3vw - 3.3vw - 14px - 15px - 15px)',
+    marginRight: '4px',
+    width: 'calc(100% - 3.3vw - 3.3vw - 12px - 12px - 36px - 4px)',
     boxShadow: 'rgba(24, 144, 255, 0.35) 0px 2px 7px',
     border: '1px solid rgb(24, 144, 255)',
     outline: 'none',
