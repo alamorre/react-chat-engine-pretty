@@ -102,7 +102,7 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       .ce-mobile-chat-list-button { top: 32px !important; left: 0px !important; }
       .ce-mobile-chat-settings-button { display: none !important; }
 
-      .ce-avatar-status { border: 2px solid rgb(40,43,54) !important; width: 10px !important; height: 10px !important; }
+      .ce-avatar-status { border: 2px solid rgb(40,43,54) !important; }
       `}</style>
     </div>
   );
@@ -124,7 +124,6 @@ const styles = {
     display: 'block',
     flex: '0 0 33.3333333%',
     maxWidth: '33.3333333%',
-    backgroundColor: 'pink',
   } as React.CSSProperties,
   col9: {
     display: 'block',
@@ -135,24 +134,20 @@ const styles = {
     display: 'block',
     flex: '0 0 58.33333333%',
     maxWidth: '58.33333333%',
-    backgroundColor: 'green',
   } as React.CSSProperties,
   col16: {
     display: 'block',
     flex: '0 0 66.66666667%',
     maxWidth: '66.66666667%',
-    backgroundColor: 'yellow',
   } as React.CSSProperties,
   col22: {
     display: 'block',
     flex: '0 0 91.66666667%',
     maxWidth: '91.66666667%',
-    backgroundColor: 'brown',
   } as React.CSSProperties,
   col24: {
     display: 'block',
     flex: '0 0 100%',
     maxWidth: '100%',
-    backgroundColor: 'brown',
   } as React.CSSProperties,
 };
