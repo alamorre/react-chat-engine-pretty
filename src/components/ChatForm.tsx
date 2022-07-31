@@ -27,7 +27,8 @@ interface OptionType {
 }
 
 interface ChatFormProps {
-  onCancel?: () => void;
+  username: string;
+  onCancel: () => void;
 }
 
 const ChatForm = (props: ChatFormProps) => {
@@ -40,7 +41,10 @@ const ChatForm = (props: ChatFormProps) => {
 
       getAllUsers(
         users => {
-          const options = users.map(user => {
+          const otherUsers = users.filter(
+            user => user.username !== props.username
+          );
+          const options = otherUsers.map(user => {
             return {
               value: JSON.stringify(user),
               label: `${user.first_name} ${user.last_name}`,

@@ -30,7 +30,7 @@ interface PrettyChatWindowProps extends MultiChatWindowProps {
 }
 
 export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
-  const [isChatFormActive, setIsChatFormActive] = useState(true);
+  const [isChatFormActive, setIsChatFormActive] = useState(false);
   const isMobile: boolean = useIsMobile();
 
   const chatProps = useMultiChatLogic(
@@ -52,13 +52,21 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
         <ChatList
           {...chatProps}
           renderChatForm={() => (
-            <ChatListHeader onNewChatClick={() => setIsChatFormActive(true)} />
+            <ChatListHeader
+              onNewChatClick={() => {
+                chatProps.setActiveChatId(undefined);
+                setIsChatFormActive(true);
+              }}
+            />
           )}
           renderChatCard={(props: ChatCardProps) => (
             <ChatCard
               {...props}
               username={chatProps.username}
-              onChatCardClick={chatProps.onChatCardClick}
+              onChatCardClick={(chatId: number) => {
+                setIsChatFormActive(false);
+                chatProps.onChatCardClick(chatId);
+              }}
               isActive={
                 props.chat !== undefined &&
                 chatProps.activeChatId === props.chat.id
@@ -74,7 +82,12 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
           {...chatProps}
           renderChatHeader={(props: ChatHeaderProps) => {
             if (isChatFormActive) {
-              return <ChatForm onCancel={() => setIsChatFormActive(false)} />;
+              return (
+                <ChatForm
+                  username={chatProps.username}
+                  onCancel={() => setIsChatFormActive(false)}
+                />
+              );
             } else {
               return (
                 <ChatHeader

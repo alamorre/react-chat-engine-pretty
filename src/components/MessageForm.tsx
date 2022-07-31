@@ -40,7 +40,7 @@ const MessageForm = (props: MessageFormProps) => {
       <input
         onChange={e => setText(e.target.value)}
         value={text}
-        placeholder="Type something..."
+        placeholder="Write a message..."
         className="ce-custom-message-input"
         style={{
           ...styles.messageInput,
@@ -100,8 +100,6 @@ const styles = {
     borderRadius: '8px',
     color: 'white',
     boxShadow: 'rgba(24, 144, 255, 0.35) 0px 5px 15px',
-    // marginTop: '12px',
-    // marginRight: '3.3vw',
     transition: 'all .44s ease',
   } as CSSProperties,
 };
