@@ -16,6 +16,7 @@ import { useIsMobile } from './functions/isMobile';
 import ChatHeader from './components/ChatHeader';
 import ChatCard from './components/ChatCard';
 import MessageForm from './components/MessageForm';
+import ChatListHeader from './components/ChatListHeader';
 
 interface PrettyChatWindowProps extends MultiChatWindowProps {
   projectId: string;
@@ -46,6 +47,7 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       <div style={isMobile ? styles.col0 : styles.col8}>
         <ChatList
           {...chatProps}
+          renderChatForm={() => <ChatListHeader onNewChatClick={() => {}} />}
           renderChatCard={(props: ChatCardProps) => (
             <ChatCard
               {...props}
