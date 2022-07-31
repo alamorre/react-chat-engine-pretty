@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
 import {
   useMultiChatLogic,
@@ -9,11 +9,14 @@ import {
   ChatCardProps,
   ChatHeaderProps,
   MessageFormProps,
+  MessageListProps,
+  MessageList,
 } from 'react-chat-engine-advanced';
 
 import { useIsMobile } from './functions/isMobile';
 
 import ChatHeader from './components/ChatHeader';
+import ChatForm from './components/ChatForm';
 import ChatCard from './components/ChatCard';
 import MessageForm from './components/MessageForm';
 import ChatListHeader from './components/ChatListHeader';
@@ -27,6 +30,7 @@ interface PrettyChatWindowProps extends MultiChatWindowProps {
 }
 
 export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
+  const [isChatFormActive, setIsChatFormActive] = useState(true);
   const isMobile: boolean = useIsMobile();
 
   const chatProps = useMultiChatLogic(
@@ -47,7 +51,9 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       <div style={isMobile ? styles.col0 : styles.col8}>
         <ChatList
           {...chatProps}
-          renderChatForm={() => <ChatListHeader onNewChatClick={() => {}} />}
+          renderChatForm={() => (
+            <ChatListHeader onNewChatClick={() => setIsChatFormActive(true)} />
+          )}
           renderChatCard={(props: ChatCardProps) => (
             <ChatCard
               {...props}
@@ -66,12 +72,25 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       <div style={isMobile ? styles.col22 : styles.col14}>
         <ChatFeed
           {...chatProps}
-          renderChatHeader={(props: ChatHeaderProps) => (
-            <ChatHeader
+          renderChatHeader={(props: ChatHeaderProps) => {
+            if (isChatFormActive) {
+              return <ChatForm onCancel={() => setIsChatFormActive(false)} />;
+            } else {
+              return (
+                <ChatHeader
+                  {...props}
+                  chat={chatProps.chat}
+                  username={chatProps.username}
+                  secret={chatProps.secret}
+                />
+              );
+            }
+          }}
+          renderMessageList={(props: MessageListProps) => (
+            <MessageList
               {...props}
-              chat={chatProps.chat}
-              username={chatProps.username}
-              secret={chatProps.secret}
+              renderMessageList={undefined}
+              messages={isChatFormActive ? [] : chatProps.messages}
             />
           )}
           renderMessageForm={(props: MessageFormProps) => (

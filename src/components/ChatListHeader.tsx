@@ -32,7 +32,6 @@ const styles = {
     paddingTop: '28px',
     paddingBottom: '32px',
   } as CSSProperties,
-
   chatListHeaderTitle: {
     display: 'inline-block',
     color: 'white',
@@ -40,7 +39,6 @@ const styles = {
     fontFamily: 'Avenir',
     fontWeight: '600',
   } as CSSProperties,
-
   chatListHeaderButton: {
     display: 'inline-block',
     float: 'right',

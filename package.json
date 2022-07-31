@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "react-chat-engine-advanced": "^0.1.21"
+    "react-chat-engine-advanced": "^0.1.21",
+    "react-select": "^5.4.0"
   }
 }

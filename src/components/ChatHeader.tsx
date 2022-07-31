@@ -37,7 +37,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
   // TODO: Show how TS recommends props.chat &&
   const otherMember: PersonObject | undefined =
     props.chat && getOtherUser(props.chat, props.username);
-  console.log('otherMember', otherMember);
+
   const onFilesSelect: React.ChangeEventHandler<HTMLInputElement> = () => {
     if (!props.chat) return;
     setFilePickerLoading(true);
