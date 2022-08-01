@@ -1,10 +1,6 @@
 import React, { CSSProperties } from 'react';
 
-import {
-  ChatHeaderProps,
-  ChatObject,
-  Avatar,
-} from 'react-chat-engine-advanced';
+import { ChatHeaderProps, ChatObject } from 'react-chat-engine-advanced';
 
 import {
   DeleteFilled,
@@ -12,11 +8,9 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 
-// import axios from 'axios';
+import OtherAvatars from './OtherAvatars';
 
-// import { nowTimeStamp } from '../functions/dates';
 import { getOtherUsers, getChatTitle } from '../functions/getOtherUsers';
-import { useIsMobile } from '../functions/isMobile';
 
 import { useState } from 'react';
 
@@ -30,10 +24,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
   // State
   const [isFilePickerLoading, setFilePickerLoading] = useState(false);
   const [isDeleteLoading, setDeleteLoading] = useState(false);
-  // Hooks
-  const isMobile: boolean = useIsMobile();
 
-  // TODO: Show how TS recommends props.chat &&
   const otherMembers = props.chat
     ? getOtherUsers(props.chat, props.username)
     : [];
@@ -56,11 +47,10 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
 
   return (
     <div className="ce-custom-chat-header" style={styles.chatHeader}>
-      <Avatar
-        className="ce-custom-header-avatar"
-        avatarUrl={otherMember?.avatar}
-        username={otherMember?.username}
-        isOnline={otherMember?.is_online}
+      <OtherAvatars
+        chat={props.chat}
+        username={props.username}
+        style={styles.chatAvatars}
       />
 
       <div className="ce-custom-header-text" style={styles.headerText}>
@@ -110,40 +100,37 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
         )}
       </div>
 
-      <style>{`
-        .ce-custom-header-icon:hover { color: rgb(24, 144, 255) !important; }
-        .ce-custom-header-avatar { display: inline-block; position: relative; top: 18px; margin-left: ${
-          isMobile ? '48px' : '12px'
-        }; border: 1px solid ${
-        otherMember?.is_online ? 'rgb(24, 144, 255)' : '#fa541c'
-      }; box-shadow: ${
-        otherMember?.is_online
-          ? 'rgb(24 144 255 / 35%)'
-          : 'rgb(245 34 45 / 35%)'
-      } 0px 2px 7px; width: 38px !important; height: 38px !important; font-size: 14px !important; transition: all 0.66s ease; }
-        `}</style>
+      <style>{`.ce-custom-header-icon:hover { color: rgb(24, 144, 255) !important; }`}</style>
     </div>
   );
 };
 
 const styles = {
+  chatAvatars: {
+    width: 'calc(40px + 14px + 14px)',
+    height: '100%',
+    display: 'block',
+    backgroundColor: 'red',
+  } as CSSProperties,
   chatHeader: {
-    display: 'inline-block',
+    display: 'flex',
     position: 'relative',
-    width: '100%',
+    marginLeft: '12px',
+    width: 'calc(100% - 12px - 12px)',
     height: '86px',
   } as CSSProperties,
   headerText: {
-    display: 'inline-block',
-    maxWidth: '50%',
-    paddingLeft: '14px',
+    display: 'block',
+    width: 'calc(100% - 40px - 14px - 14px - 100px)',
+    height: '100%',
+    backgroundColor: 'blue',
     position: 'relative',
-    top: '21px',
   } as CSSProperties,
   headerTitle: {
     color: 'white',
     fontSize: '13px',
     fontFamily: 'Avenir',
+    paddingTop: '26.5px',
   } as CSSProperties,
   headerSubtitle: {
     fontFamily: 'Avenir',
@@ -151,14 +138,15 @@ const styles = {
     fontSize: '11px',
   } as CSSProperties,
   iconWrapper: {
-    display: 'inline-block',
-    maxWidth: '50%',
-    position: 'relative',
-    top: '36px',
-    float: 'right',
+    display: 'block',
+    width: '100px',
+    height: '100%',
+    backgroundColor: 'green',
+    textAlign: 'right',
   } as CSSProperties,
   headerIcon: {
-    marginRight: '12px',
+    marginLeft: '12px',
+    paddingTop: 'calc((86px - 15px) / 2)',
     cursor: 'pointer',
     color: 'rgb(153, 153, 153)',
     transition: 'all 0.66s ease',

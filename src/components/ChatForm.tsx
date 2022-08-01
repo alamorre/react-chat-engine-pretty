@@ -53,7 +53,6 @@ const ChatForm = (props: ChatFormProps) => {
     onError: () => void
   ) => {
     axios
-      // TODO: Change this to prod URL
       .get('http://127.0.0.1:8000/users/search/', {
         headers: {
           'Project-ID': props.projectId,

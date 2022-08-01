@@ -173,7 +173,7 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       .ce-mobile-chat-list-button { top: 32px !important; left: 0px !important; }
       .ce-mobile-chat-settings-button { display: none !important; }
 
-      .ce-avatar-status { border: 2px solid rgb(40,43,54) !important; }
+      .ce-avatar-status { border: 2px solid rgb(40,43,54) !important; width: 7px !important; height: 7px !important; }
       `}</style>
     </div>
   );
