@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import axios from 'axios';
+
 import {
   useMultiChatLogic,
   ChatList,
@@ -11,12 +13,13 @@ import {
   MessageFormProps,
   MessageListProps,
   MessageList,
+  PersonObject,
 } from 'react-chat-engine-advanced';
 
 import { useIsMobile } from './functions/isMobile';
 
 import ChatHeader from './components/ChatHeader';
-import ChatForm from './components/ChatForm';
+import ChatForm, { OptionType } from './components/ChatForm';
 import ChatCard from './components/ChatCard';
 import MessageForm from './components/MessageForm';
 import ChatListHeader from './components/ChatListHeader';
@@ -31,6 +34,7 @@ interface PrettyChatWindowProps extends MultiChatWindowProps {
 
 export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
   const [isChatFormActive, setIsChatFormActive] = useState(false);
+  const [chatFormUsers, setChatFromUsers] = useState<PersonObject[]>([]);
   const isMobile: boolean = useIsMobile();
 
   const chatProps = useMultiChatLogic(
@@ -39,6 +43,31 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
     props.secret,
     props.httpUrl
   );
+
+  async function getOrCreateChat() {
+    const usernames = chatFormUsers.map(user => user.username);
+    const data = {
+      usernames: usernames,
+    };
+    const headers = {
+      'Project-ID': chatProps.projectId,
+      'User-Name': chatProps.username,
+      'User-Secret': chatProps.secret,
+    };
+
+    axios.put('http://127.0.0.1:8000/chats/', data, { headers }).then(r => {
+      setIsChatFormActive(false);
+      setChatFromUsers([]);
+      chatProps.onChatCardClick(r.data.id);
+    });
+  }
+
+  const onChatFormChange = (options: OptionType[]) => {
+    const users: PersonObject[] = options.map(option =>
+      JSON.parse(option.value)
+    );
+    setChatFromUsers(users);
+  };
 
   return (
     <div
@@ -65,6 +94,7 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
               username={chatProps.username}
               onChatCardClick={(chatId: number) => {
                 setIsChatFormActive(false);
+                setChatFromUsers([]);
                 chatProps.onChatCardClick(chatId);
               }}
               isActive={
@@ -85,7 +115,8 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
               return (
                 <ChatForm
                   username={chatProps.username}
-                  onCancel={() => setIsChatFormActive(false)}
+                  onChange={onChatFormChange}
+                  onCancel={getOrCreateChat}
                 />
               );
             } else {
@@ -106,9 +137,13 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
               messages={isChatFormActive ? [] : chatProps.messages}
             />
           )}
-          renderMessageForm={(props: MessageFormProps) => (
-            <MessageForm {...props} />
-          )}
+          renderMessageForm={(props: MessageFormProps) => {
+            if (isChatFormActive) {
+              return <div style={styles.messageForm} />;
+            } else {
+              return <MessageForm {...props} />;
+            }
+          }}
         />
       </div>
 
@@ -183,5 +218,13 @@ const styles = {
     display: 'block',
     flex: '0 0 100%',
     maxWidth: '100%',
+  } as React.CSSProperties,
+  messageForm: {
+    height: '68px',
+    marginLeft: '12px',
+    marginRight: '12px',
+    width: 'calc(100% - 12px - 12px)',
+    borderRadius: '0px 0px 8px 8px',
+    backgroundColor: '#3e404b',
   } as React.CSSProperties,
 };

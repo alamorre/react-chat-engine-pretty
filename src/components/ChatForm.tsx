@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { PersonObject } from 'react-chat-engine-advanced';
 
-import { CloseOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
 import Select from 'react-select';
 
@@ -21,19 +21,21 @@ const getAllUsers = (
     .catch(() => onError);
 };
 
-interface OptionType {
+export interface OptionType {
   value: string;
   label: string;
 }
 
 interface ChatFormProps {
   username: string;
+  onChange: (users: OptionType[]) => void;
   onCancel: () => void;
 }
 
 const ChatForm = (props: ChatFormProps) => {
   const didMountRef = useRef(false);
   const [options, setOptions] = useState<OptionType[]>([]);
+  const [selected, setSelected] = useState<OptionType[]>([]);
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -63,20 +65,27 @@ const ChatForm = (props: ChatFormProps) => {
         options={options}
         autoFocus={true}
         isMulti={true}
-        onChange={e => console.log(e)}
+        onChange={users => {
+          setSelected(users as OptionType[]);
+          props.onChange(users as OptionType[]);
+        }}
         styles={customStyles}
         placeholder="Search for users..."
       />
 
       <button
-        className="ce-cancel-new-chat-button"
-        style={styles.createChatButton}
+        className="ce-create-chat-button"
+        style={{
+          ...styles.createChatButton,
+          ...(selected.length === 0 && styles.createChatButtonDisabled),
+        }}
         onClick={props.onCancel}
+        disabled={selected.length === 0}
       >
-        <CloseOutlined />
+        <PlusOutlined />
       </button>
 
-      <style>{`.ce-cancel-new-chat-button:hover { color: rgb(24, 144, 255) !important; }`}</style>
+      <style>{`.ce-create-chat-button:hover { background-color: #40a9ff; }`}</style>
     </div>
   );
 };
@@ -139,14 +148,22 @@ const styles = {
     position: 'absolute',
     right: '12px',
     top: '26px',
-
+    borderRadius: '8px',
     cursor: 'pointer',
-    transition: 'all 0.33s ease',
+    transition: 'all 0.44s ease',
     outline: 'none',
-    backgroundColor: 'rgb(40,43,54)',
-    border: '1px solid rgb(40,43,54)',
+    backgroundColor: 'rgb(24, 144, 255)',
+    border: '1px solid rgb(24, 144, 255)',
     fontSize: '18px',
     color: 'white',
+    boxShadow: 'rgba(24, 144, 255, 0.35) 0px 5px 15px',
+  } as CSSProperties,
+  createChatButtonDisabled: {
+    cursor: 'not-allowed',
+    color: 'rgb(62,64,75)',
+    backgroundColor: '#323642',
+    border: '1px solid #323642',
+    boxShadow: 'none',
   } as CSSProperties,
 };
 
