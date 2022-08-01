@@ -1,6 +1,6 @@
 import { ChatObject, PersonObject } from "react-chat-engine-advanced";
 
-export const getOtherUser = (
+export const getOtherUsers = (
   chat: ChatObject,
   username: string
 ): PersonObject[] => {
@@ -11,7 +11,7 @@ export const getOtherUser = (
 };
 
 export const getChatTitle = (chat: ChatObject, username: string) => {
-  const otherUsers = getOtherUser(chat, username)
+  const otherUsers = getOtherUsers(chat, username)
   if (otherUsers.length === 1) {
     return `${otherUsers[0].first_name} ${otherUsers[0].last_name}`;
   } else {

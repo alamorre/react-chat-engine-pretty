@@ -6,7 +6,7 @@ import {
   ChatObject,
 } from 'react-chat-engine-advanced';
 
-import { getChatTitle, getOtherUser } from '../functions/getOtherUser';
+import { getChatTitle, getOtherUsers } from '../functions/getOtherUsers';
 
 interface CustomChatCardProps extends ChatCardProps {
   username: string;
@@ -18,7 +18,7 @@ interface CustomChatCardProps extends ChatCardProps {
 const CustomChatCard = (props: CustomChatCardProps) => {
   if (!props.chat) return <div />;
 
-  const otherUsers = getOtherUser(props.chat, props.username);
+  const otherUsers = getOtherUsers(props.chat, props.username);
   const otherMember = otherUsers.length > 0 ? otherUsers[0] : undefined;
   const username = otherMember ? otherMember.username : '';
   const messageText = props.chat.last_message.text;

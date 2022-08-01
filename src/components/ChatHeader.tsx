@@ -15,7 +15,7 @@ import {
 // import axios from 'axios';
 
 // import { nowTimeStamp } from '../functions/dates';
-import { getOtherUser, getChatTitle } from '../functions/getOtherUser';
+import { getOtherUsers, getChatTitle } from '../functions/getOtherUsers';
 import { useIsMobile } from '../functions/isMobile';
 
 import { useState } from 'react';
@@ -35,7 +35,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
 
   // TODO: Show how TS recommends props.chat &&
   const otherMembers = props.chat
-    ? getOtherUser(props.chat, props.username)
+    ? getOtherUsers(props.chat, props.username)
     : [];
   const otherMember = otherMembers.length > 0 ? otherMembers[0] : undefined;
 
