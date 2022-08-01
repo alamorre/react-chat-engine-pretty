@@ -22,7 +22,7 @@ const MessageForm = (props: MessageFormProps) => {
 
     const message: MessageObject = {
       text: text,
-      sender_username: 'FIX THIS',
+      sender_username: props.username ? props.username : '',
       created: nowTimeStamp(),
       custom_json: {},
       attachments: [],

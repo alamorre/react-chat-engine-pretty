@@ -8,26 +8,15 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import Select from 'react-select';
 
-const getAllUsers = (
-  onSuccess: (data: PersonObject[]) => void,
-  onError: () => void
-) => {
-  axios
-    // TODO: Change this to prod URL
-    .get('http://127.0.0.1:8000/users/', {
-      headers: { 'Private-Key': 'b4533f3c-e60a-409f-8a24-2e1a8bc2943e' },
-    })
-    .then(r => onSuccess(r.data))
-    .catch(() => onError);
-};
-
 export interface OptionType {
   value: string;
   label: string;
 }
 
 interface ChatFormProps {
+  projectId: string;
   username: string;
+  secret: string;
   onChange: (users: OptionType[]) => void;
   onCancel: () => void;
 }
@@ -58,6 +47,23 @@ const ChatForm = (props: ChatFormProps) => {
       );
     }
   });
+
+  const getAllUsers = (
+    onSuccess: (data: PersonObject[]) => void,
+    onError: () => void
+  ) => {
+    axios
+      // TODO: Change this to prod URL
+      .get('http://127.0.0.1:8000/users/search/', {
+        headers: {
+          'Project-ID': props.projectId,
+          'User-Name': props.username,
+          'User-Secret': props.secret,
+        },
+      })
+      .then(r => onSuccess(r.data))
+      .catch(() => onError);
+  };
 
   return (
     <div className="ce-custom-chat-form" style={styles.chatForm}>

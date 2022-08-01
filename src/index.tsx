@@ -114,7 +114,9 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
             if (isChatFormActive) {
               return (
                 <ChatForm
+                  projectId={chatProps.projectId}
                   username={chatProps.username}
+                  secret={chatProps.secret}
                   onChange={onChatFormChange}
                   onCancel={getOrCreateChat}
                 />
