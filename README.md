@@ -10,9 +10,9 @@
     </p>
 </p>
 
-## Chat Engine Pretty
+## Chat Engine ✨Pretty✨
 
-Chat Engine is a devevloper friendly Chat UI Kit.
+Chat Engine is a devevloper friendly and ✨pretty✨ Chat UI Kit.
 
 Setup a free plan at [chatengine.io](https://chatengine.io)
 

@@ -1,4 +1,4 @@
-import { PrettyChatWindow } from 'react-chat-engine-advanced';
+import { PrettyChatWindow } from 'react-chat-engine-pretty';
 
 function App() {
   const usernames = [
@@ -8,15 +8,13 @@ function App() {
     'cindy@mail.com',
   ];
   return (
-    <div>
-      <PrettyChatWindow
-        projectId="e7bc4093-a3cf-405a-b87f-f2eb6ba24eef"
-        username={usernames[Math.floor(Math.random() * usernames.length)]}
-        secret="Pass1234!"
-        httpUrl="https://api.chatengine.io"
-        height="calc(100vh - 24px)"
-      />
-    </div>
+    <PrettyChatWindow
+      projectId="e7bc4093-a3cf-405a-b87f-f2eb6ba24eef"
+      username={usernames[Math.floor(Math.random() * usernames.length)]}
+      secret="Pass1234!"
+      httpUrl="https://api.chatengine.io"
+      height="calc(100vh - 24px)"
+    />
   );
 }
 
