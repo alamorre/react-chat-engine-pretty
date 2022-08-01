@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
       <PrettyChatWindow
-        projectId="e9cffdf0-9612-4ec3-a8f1-343938280012"
+        projectId="e7bc4093-a3cf-405a-b87f-f2eb6ba24eef"
         username={usernames[Math.floor(Math.random() * usernames.length)]}
         secret="Pass1234!"
         httpUrl="https://api.chatengine.io"
