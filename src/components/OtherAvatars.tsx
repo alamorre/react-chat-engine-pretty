@@ -30,10 +30,10 @@ const OtherAvatars = (props: OtherAvatarProps) => {
             fontSize: '12px',
           }),
           ...(memberThree && {
-            width: '14px',
-            height: '14px',
-            lineHeight: '14px',
-            fontSize: '6px',
+            width: '21px',
+            height: '21px',
+            lineHeight: '21px',
+            fontSize: '10px',
           }),
         }}
       />
@@ -55,11 +55,33 @@ const OtherAvatars = (props: OtherAvatarProps) => {
               left: 'calc(40px - 28px)',
             },
             ...(memberThree && {
-              width: '14px',
-              height: '14px',
-              lineHeight: '14px',
-              fontSize: '6px',
+              width: '21px',
+              height: '21px',
+              lineHeight: '21px',
+              fontSize: '10px',
+              top: '-1px',
+              left: '22px',
             }),
+          }}
+        />
+      )}
+
+      {memberThree && (
+        <Avatar
+          className="ce-custom-header-avatar"
+          avatarUrl={memberThree?.avatar}
+          username={memberThree?.username}
+          style={{
+            ...styles.avatar,
+            ...(memberThree?.is_online ? styles.online : styles.offline),
+            ...{
+              width: '21px',
+              height: '21px',
+              lineHeight: '21px',
+              fontSize: '10px',
+              top: '-6px',
+              left: '10px',
+            },
           }}
         />
       )}

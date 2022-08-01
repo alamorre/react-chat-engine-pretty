@@ -110,7 +110,6 @@ const styles = {
     width: 'calc(40px + 14px + 14px)',
     height: '100%',
     display: 'block',
-    backgroundColor: 'red',
   } as CSSProperties,
   chatHeader: {
     display: 'flex',
@@ -123,7 +122,6 @@ const styles = {
     display: 'block',
     width: 'calc(100% - 40px - 14px - 14px - 100px)',
     height: '100%',
-    backgroundColor: 'blue',
     position: 'relative',
   } as CSSProperties,
   headerTitle: {
@@ -141,7 +139,6 @@ const styles = {
     display: 'block',
     width: '100px',
     height: '100%',
-    backgroundColor: 'green',
     textAlign: 'right',
   } as CSSProperties,
   headerIcon: {

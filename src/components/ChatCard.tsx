@@ -8,6 +8,8 @@ import {
 
 import { getChatTitle, getOtherUsers } from '../functions/getOtherUsers';
 
+import OtherAvatars from './OtherAvatars';
+
 interface CustomChatCardProps extends ChatCardProps {
   username: string;
   isActive: boolean;
@@ -16,16 +18,15 @@ interface CustomChatCardProps extends ChatCardProps {
 }
 
 const CustomChatCard = (props: CustomChatCardProps) => {
-  if (!props.chat) return <div />;
+  const { chat } = props;
 
-  const otherUsers = getOtherUsers(props.chat, props.username);
+  if (chat === undefined) return <div />;
+
+  const otherUsers = getOtherUsers(chat, props.username);
   const otherMember = otherUsers.length > 0 ? otherUsers[0] : undefined;
   const username = otherMember ? otherMember.username : '';
-  const messageText = props.chat.last_message.text;
-  const hasNotification =
-    props.chat.last_message.sender_username !== props.username;
-
-  if (!props.chat) return <div />;
+  const messageText = chat.last_message.text;
+  const hasNotification = chat.last_message.sender_username !== props.username;
 
   return (
     <div>
@@ -36,7 +37,7 @@ const CustomChatCard = (props: CustomChatCardProps) => {
         `}</style>
 
       <ChatCard
-        title={getChatTitle(props.chat, props.username)}
+        title={getChatTitle(chat, props.username)}
         description={
           messageText === null || messageText.length === 0
             ? 'Say hello'
@@ -55,6 +56,17 @@ const CustomChatCard = (props: CustomChatCardProps) => {
             : '1px solid rgb(245 34 45)',
         }}
         isActive={props.isActive}
+        renderAvatar={() => (
+          <OtherAvatars
+            chat={chat}
+            username={props.username}
+            style={{
+              position: 'relative',
+              width: '52px',
+              top: '-8px',
+            }}
+          />
+        )}
         onClick={() => props.chat && props.onChatCardClick(props.chat.id)}
         style={{
           border: '1px solid #3e404b',
