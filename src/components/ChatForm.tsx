@@ -53,7 +53,7 @@ const ChatForm = (props: ChatFormProps) => {
     onError: () => void
   ) => {
     axios
-      .get('http://127.0.0.1:8000/users/search/', {
+      .get('https://api.chatengine.io/users/search/', {
         headers: {
           'Project-ID': props.projectId,
           'User-Name': props.username,

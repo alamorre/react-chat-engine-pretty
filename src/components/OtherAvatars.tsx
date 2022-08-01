@@ -59,7 +59,7 @@ const OtherAvatars = (props: OtherAvatarProps) => {
               height: '21px',
               lineHeight: '21px',
               fontSize: '10px',
-              top: '-1px',
+              top: '-5px',
               left: '22px',
             }),
           }}
@@ -79,8 +79,8 @@ const OtherAvatars = (props: OtherAvatarProps) => {
               height: '21px',
               lineHeight: '21px',
               fontSize: '10px',
-              top: '-6px',
-              left: '10px',
+              top: '-7px',
+              left: '11px',
             },
           }}
         />

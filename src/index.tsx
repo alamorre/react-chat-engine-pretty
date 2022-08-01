@@ -55,7 +55,7 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       'User-Secret': chatProps.secret,
     };
 
-    axios.put('http://127.0.0.1:8000/chats/', data, { headers }).then(r => {
+    axios.put('https://api.chatengine.io/chats/', data, { headers }).then(r => {
       setIsChatFormActive(false);
       setChatFromUsers([]);
       chatProps.onChatCardClick(r.data.id);
@@ -110,7 +110,7 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
       <div style={isMobile ? styles.col22 : styles.col14}>
         <ChatFeed
           {...chatProps}
-          renderChatHeader={(props: ChatHeaderProps) => {
+          renderChatHeader={(chatHeaderProps: ChatHeaderProps) => {
             if (isChatFormActive) {
               return (
                 <ChatForm
@@ -124,10 +124,12 @@ export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
             } else {
               return (
                 <ChatHeader
-                  {...props}
+                  {...chatHeaderProps}
                   chat={chatProps.chat}
+                  projectId={chatProps.projectId}
                   username={chatProps.username}
                   secret={chatProps.secret}
+                  onDeleteChat={chatProps.onDeleteChat}
                 />
               );
             }

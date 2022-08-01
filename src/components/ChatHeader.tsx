@@ -1,5 +1,7 @@
 import React, { CSSProperties } from 'react';
 
+import axios from 'axios';
+
 import { ChatHeaderProps, ChatObject } from 'react-chat-engine-advanced';
 
 import {
@@ -10,14 +12,17 @@ import {
 
 import OtherAvatars from './OtherAvatars';
 
+import { nowTimeStamp } from '../functions/dates';
 import { getOtherUsers, getChatTitle } from '../functions/getOtherUsers';
 
 import { useState } from 'react';
 
 interface CustomChatHeaderProps extends ChatHeaderProps {
   chat?: ChatObject;
+  projectId: string;
   username: string;
   secret: string;
+  onDeleteChat: (oldChat: ChatObject) => void;
 }
 
 const ChatHeader = (props: CustomChatHeaderProps) => {
@@ -30,16 +35,49 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
     : [];
   const otherMember = otherMembers.length > 0 ? otherMembers[0] : undefined;
 
-  const onFilesSelect: React.ChangeEventHandler<HTMLInputElement> = () => {
+  const onFilesSelect: React.ChangeEventHandler<HTMLInputElement> = e => {
     if (!props.chat) return;
     setFilePickerLoading(true);
-    console.log('FIX THIS FILE UPLOAD');
+
+    const headers = {
+      'Project-ID': props.projectId,
+      'User-Name': props.username,
+      'User-Secret': props.secret,
+    };
+
+    const formdata = new FormData();
+    const filesArr = Array.from(e.target.files !== null ? e.target.files : []);
+    filesArr.forEach(file => formdata.append('attachments', file, file.name));
+    formdata.append('created', nowTimeStamp());
+    formdata.append('sender_username', props.username);
+    formdata.append('custom_json', JSON.stringify({}));
+
+    axios
+      .post(
+        `https://api.chatengine.io/chats/${props.chat.id}/messages/`,
+        formdata,
+        { headers }
+      )
+      .then(() => setFilePickerLoading(false))
+      .catch(() => setFilePickerLoading(false));
   };
 
   const onDelete = () => {
     if (!props.chat) return;
     setDeleteLoading(true);
-    console.log('FIX THIS CHAT DELETE');
+
+    const headers = {
+      'Project-ID': props.projectId,
+      'User-Name': props.username,
+      'User-Secret': props.secret,
+    };
+
+    axios
+      .delete(`https://api.chatengine.io/chats/${props.chat.id}/`, { headers })
+      .then(r => {
+        setDeleteLoading(false);
+        props.onDeleteChat(r.data);
+      });
   };
 
   if (!otherMember || !props.chat)
@@ -70,7 +108,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
           <label htmlFor="ce-files-picker">
             {isFilePickerLoading ? (
               <LoadingOutlined
-                style={styles.headerIcon}
+                style={{ color: 'rgb(153, 153, 153)' }}
                 className="ce-custom-header-icon"
               />
             ) : (
@@ -90,7 +128,10 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
         </form>
 
         {isDeleteLoading ? (
-          <LoadingOutlined className="ce-custom-header-icon" />
+          <LoadingOutlined
+            style={{ color: 'rgb(153, 153, 153)' }}
+            className="ce-custom-header-icon"
+          />
         ) : (
           <DeleteFilled
             onClick={() => onDelete()}
