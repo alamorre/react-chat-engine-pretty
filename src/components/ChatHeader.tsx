@@ -3,7 +3,6 @@ import React, { CSSProperties } from 'react';
 import {
   ChatHeaderProps,
   ChatObject,
-  PersonObject,
   Avatar,
 } from 'react-chat-engine-advanced';
 
@@ -16,7 +15,7 @@ import {
 // import axios from 'axios';
 
 // import { nowTimeStamp } from '../functions/dates';
-import { getOtherUser } from '../functions/getOtherUser';
+import { getOtherUser, getChatTitle } from '../functions/getOtherUser';
 import { useIsMobile } from '../functions/isMobile';
 
 import { useState } from 'react';
@@ -35,8 +34,10 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
   const isMobile: boolean = useIsMobile();
 
   // TODO: Show how TS recommends props.chat &&
-  const otherMember: PersonObject | undefined =
-    props.chat && getOtherUser(props.chat, props.username);
+  const otherMembers = props.chat
+    ? getOtherUser(props.chat, props.username)
+    : [];
+  const otherMember = otherMembers.length > 0 ? otherMembers[0] : undefined;
 
   const onFilesSelect: React.ChangeEventHandler<HTMLInputElement> = () => {
     if (!props.chat) return;
@@ -50,7 +51,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
     console.log('FIX THIS CHAT DELETE');
   };
 
-  if (!otherMember)
+  if (!otherMember || !props.chat)
     return <div className="ce-custom-chat-header" style={styles.chatHeader} />;
 
   return (
@@ -64,7 +65,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
 
       <div className="ce-custom-header-text" style={styles.headerText}>
         <div className="ce-custom-header-title" style={styles.headerTitle}>
-          {otherMember.first_name} {otherMember.last_name}
+          {getChatTitle(props.chat, props.username)}
         </div>
         <div
           className="ce-custom-header-subtitle"
