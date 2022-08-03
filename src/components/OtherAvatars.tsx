@@ -98,6 +98,7 @@ const styles = {
     width: '38px',
     height: '38px',
     fontSize: '14px',
+    lineHeight: '40px',
     transition: 'all 0.66s ease',
   } as React.CSSProperties,
   online: {
