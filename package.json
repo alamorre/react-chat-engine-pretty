@@ -1,5 +1,5 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "react-chat-engine-advanced": "^0.1.24",
+    "react-chat-engine-advanced": "^0.1.25",
     "react-select": "^5.4.0"
   }
 }
