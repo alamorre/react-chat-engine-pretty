@@ -32,7 +32,7 @@ interface PrettyChatWindowProps extends MultiChatWindowProps {
   height?: string;
 }
 
-const PrettyChatWindow = (props: PrettyChatWindowProps) => {
+export const PrettyChatWindow = (props: PrettyChatWindowProps) => {
   const [isChatFormActive, setIsChatFormActive] = useState(false);
   const [chatFormUsers, setChatFromUsers] = useState<PersonObject[]>([]);
   const isMobile: boolean = useIsMobile();
@@ -232,9 +232,3 @@ const styles = {
     backgroundColor: '#3e404b',
   } as React.CSSProperties,
 };
-
-const rce = {
-  PrettyChatWindow,
-};
-
-export default rce;
